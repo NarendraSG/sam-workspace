@@ -1,0 +1,24 @@
+{
+  "name": "func1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "run": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/narendra-7638/lerna-practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/narendra-7638/lerna-practice/issues"
+  },
+  "homepage": "https://github.com/narendra-7638/lerna-practice#readme",
+  "dependencies": {
+    "lib": "*"
+  }
+}
