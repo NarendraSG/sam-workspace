@@ -1,5 +1,5 @@
 {
-  "name": "func1",
+  "name": "userservice",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,6 +19,12 @@
   },
   "homepage": "https://github.com/narendra-7638/lerna-practice#readme",
   "dependencies": {
-    "lib": "*"
+    "dynamoose": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.111",
+    "@types/node": "^18.15.3",
+    "aws-lambda": "^1.0.7",
+    "datatypes": "*"
   }
 }

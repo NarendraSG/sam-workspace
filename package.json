@@ -1,9 +1,9 @@
 {
   "name": "sam-workspace",
   "workspaces": [
-    "packages/lib",
-    "packages/func1",
-    "packages/func2"
+    "packages/DataTypes",
+    "packages/AuthService",
+    "packages/UserService"   
   ],
   "devDependencies": {
     "@types/node": "^18.14.6",

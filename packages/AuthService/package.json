@@ -1,13 +1,11 @@
 {
-  "name": "func2",
+  "name": "authservice",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "run": "node dist/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,8 +16,5 @@
   "bugs": {
     "url": "https://github.com/narendra-7638/lerna-practice/issues"
   },
-  "homepage": "https://github.com/narendra-7638/lerna-practice#readme",
-  "dependencies": {
-    "lib": "*"
-  }
+  "homepage": "https://github.com/narendra-7638/lerna-practice#readme"
 }
