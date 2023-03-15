@@ -1,13 +1,8 @@
 {
-  "name": "datatypes",
+  "name": "loggers",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-  "private": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/narendra-7638/lerna-practice.git"

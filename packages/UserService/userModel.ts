@@ -1,5 +1,4 @@
 import { Schema, model } from "dynamoose";
-import {IUser} from "datatypes";
 
 const schema = new Schema(
   {
@@ -12,8 +11,7 @@ const schema = new Schema(
   {
     saveUnknown: false,
     timestamps: true,
-  },
+  }
 );
 
-export const User = model<IUser>(process.env.TABLE_USER as string, schema);
-
+export const User = model(process.env.TABLE_USER as string, schema);

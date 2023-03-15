@@ -1,9 +1,8 @@
 {
   "name": "sam-workspace",
   "workspaces": [
-    "packages/DataTypes",
-    "packages/AuthService",
-    "packages/UserService"   
+    "libraries/*",
+    "packages/*"
   ],
   "devDependencies": {
     "@types/node": "^18.14.6",
@@ -12,6 +11,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "del": "rm -rf .aws-sam/ && rm -rf node_modules/ && rm -rf package-lock.json"
   }
 }
