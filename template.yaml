@@ -23,7 +23,7 @@ Parameters:
   UserTableName:
     Type: String
     Default: users
-    Description: User Table Name
+    Description: User Table Name 
   
 
 Resources: 
