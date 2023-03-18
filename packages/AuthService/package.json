@@ -1,23 +1,24 @@
 {
-  "name": "authservice",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/narendra-7638/lerna-practice.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/narendra-7638/lerna-practice/issues"
-  },
-  "homepage": "https://github.com/narendra-7638/lerna-practice#readme",
-  "devDependencies": {
-    "@types/aws-lambda": "^8.10.111",
-    "@types/node": "^18.15.3"
-  }
+	"name": "authservice",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/narendra-7638/lerna-practice.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/narendra-7638/lerna-practice/issues"
+	},
+	"homepage": "https://github.com/narendra-7638/lerna-practice#readme",
+	"devDependencies": {
+		"@types/aws-lambda": "^8.10.111",
+		"@types/node": "^18.15.3",
+		"esbuild": "^0.17.11"
+	}
 }
