@@ -1,8 +1,8 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import * as dynamoose from 'dynamoose';
 import { User } from '../userModel';
-import { logInfo, logError } from '../loggers';
-import { createUserMiddleware, UserServiceSchema } from '../middlewares';
+import { logInfo, logError } from 'loggers';
+import { createUserMiddleware, UserServiceSchema } from 'middleware';
 
 if (process.env.STAGE != 'local') {
 	const ddb = new dynamoose.aws.ddb.DynamoDB({
