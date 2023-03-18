@@ -30,7 +30,7 @@ const handler = async (
 		response = {
 			statusCode: 200,
 			body: JSON.stringify({
-				message: 'Successfully created new User',
+				message: 'Successfully created New User',
 				data: user,
 			}),
 		};
