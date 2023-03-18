@@ -24,7 +24,7 @@ const handler = async (
 
 	let response: APIGatewayProxyResult;
 	try {
-		const user = await User.get({ id: parseInt(id) });
+		const user = await User.get({ id });
 		response = {
 			statusCode: 200,
 			body: JSON.stringify({
