@@ -13,7 +13,7 @@ if (process.env.STAGE != 'local') {
 	dynamoose.aws.ddb.local('http://docker.for.mac.localhost:8000/');
 }
 
-const handler = async (
+export const controller = async (
 	event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
 	const {
@@ -45,7 +45,7 @@ const handler = async (
 	return response;
 };
 
-export const controller = createUserMiddleware(
-	handler,
-	UserServiceSchema.getUserSchema,
-);
+// export const controller = createUserMiddleware(
+// 	handler,
+// 	UserServiceSchema.getUserSchema,
+// );
