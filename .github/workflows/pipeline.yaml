@@ -13,19 +13,19 @@ env:
   PIPELINE_USER_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   PIPELINE_USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   SAM_TEMPLATE: template.yaml
-  TESTING_STACK_NAME: nv-sam-app-dev
-  TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::153226646421:role/aws-sam-cli-managed-dev-pipe-PipelineExecutionRole-1F1Y4NP9ZBVAX
-  TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::153226646421:role/aws-sam-cli-managed-dev-p-CloudFormationExecutionR-JJ76FM74O8Y3
-  TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-dev-pipeline-artifactsbucket-1ahyi1h49f6se
+  TESTING_STACK_NAME: sam-app-dev
+  TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::153226646421:role/aws-sam-cli-managed-sam-app-PipelineExecutionRole-NUU91EGPP0VY
+  TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::153226646421:role/aws-sam-cli-managed-sam-a-CloudFormationExecutionR-1CT6ZCWCH5FYY
+  TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-sam-app-dev-p-artifactsbucket-8ddv4o4cqf23
   # If there are functions with "Image" PackageType in your template,
   # uncomment the line below and add "--image-repository ${TESTING_IMAGE_REPOSITORY}" to
   # testing "sam package" and "sam deploy" commands.
   # TESTING_IMAGE_REPOSITORY = '0123456789.dkr.ecr.region.amazonaws.com/repository-name'
   TESTING_REGION: eu-west-1
-  PROD_STACK_NAME: nv-sam-app-prod
-  PROD_PIPELINE_EXECUTION_ROLE: arn:aws:iam::153226646421:role/aws-sam-cli-managed-prod-pip-PipelineExecutionRole-1NES5L0E6018W
-  PROD_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::153226646421:role/aws-sam-cli-managed-prod-CloudFormationExecutionR-PGH9JT679VWH
-  PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline-artifactsbucket-19l09vzjmmt52
+  PROD_STACK_NAME: sam-app-prod
+  PROD_PIPELINE_EXECUTION_ROLE: arn:aws:iam::153226646421:role/aws-sam-cli-managed-sam-app-PipelineExecutionRole-16DNV7MGTEBHM
+  PROD_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::153226646421:role/aws-sam-cli-managed-sam-a-CloudFormationExecutionR-1VPWSJGBNFB9F
+  PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-sam-app-prod-artifactsbucket-1xytbxy7gusih
   # If there are functions with "Image" PackageType in your template,
   # uncomment the line below and add "--image-repository ${PROD_IMAGE_REPOSITORY}" to
   # prod "sam package" and "sam deploy" commands.
@@ -117,7 +117,7 @@ jobs:
           use-installer: true
 
       - name: Build resources
-        run: npm install -g esbuild && sam build --template ${SAM_TEMPLATE}
+        run: sam build --template ${SAM_TEMPLATE} --use-container
 
       - name: Assume the testing pipeline user role
         uses: aws-actions/configure-aws-credentials@v1-node16
