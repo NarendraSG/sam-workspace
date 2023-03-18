@@ -20,7 +20,7 @@ export const controller = async (
 		pathParameters: { id },
 	} = event as any;
 
-	logInfo('getOne.invoked', { id });
+	logInfo('getOne.invoked', { id: parseInt(id) });
 
 	let response: APIGatewayProxyResult;
 	try {
