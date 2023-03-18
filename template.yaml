@@ -45,7 +45,7 @@ Resources:
   MyAuthFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: packages
+      CodeUri: packages/AuthService
       Handler: index.controller
       Runtime: nodejs18.x
     
@@ -56,7 +56,7 @@ Resources:
         Target: "es2020"
         Sourcemap: true
         EntryPoints: 
-        - AuthService/index.ts
+        - index.ts
 
 # Lambda Functions here
   CreateUserFunction:
@@ -65,7 +65,7 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref UserTable
-      CodeUri: packages/
+      CodeUri: packages/UserService
       Handler: create.controller
       Runtime: nodejs18.x
       Architectures:
@@ -86,94 +86,94 @@ Resources:
         Sourcemap: true
         Bundle: false
         EntryPoints: 
-        - UserService/handlers/create.ts 
+        - handlers/create.ts 
 
-  GetUserFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref UserTable
-      CodeUri: packages/
-      Handler: getOne.controller
-      Runtime: nodejs18.x
-      Architectures:
-        - x86_64
-      Events:
-        GetUserApi:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            RestApiId: !Ref RestApi
-            Path: /user/{id}
-            Method: get
-
-    
-    Metadata: # Manage esbuild properties
-      BuildMethod: esbuild
-      BuildProperties:
-        Minify: false
-        Target: "es2020"
-        Sourcemap: true
-        EntryPoints: 
-        - UserService/handlers/getOne.ts
-
-  GetUsersFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref UserTable
-      CodeUri: packages/
-      Handler: getAll.controller
-      Runtime: nodejs18.x
-      Architectures:
-        - x86_64
-      Events:
-        GetUserApi:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            RestApiId: !Ref RestApi
-            Path: /user
-            Method: get
+  # GetUserFunction:
+  #   Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  #   Properties:
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: !Ref UserTable
+  #     CodeUri: packages/
+  #     Handler: getOne.controller
+  #     Runtime: nodejs18.x
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       GetUserApi:
+  #         Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+  #         Properties:
+  #           RestApiId: !Ref RestApi
+  #           Path: /user/{id}
+  #           Method: get
 
     
-    Metadata: # Manage esbuild properties
-      BuildMethod: esbuild
-      BuildProperties:
-        Minify: false
-        Target: "es2020"
-        Sourcemap: true
-        EntryPoints: 
-        - UserService/handlers/getAll.ts
+  #   Metadata: # Manage esbuild properties
+  #     BuildMethod: esbuild
+  #     BuildProperties:
+  #       Minify: false
+  #       Target: "es2020"
+  #       Sourcemap: true
+  #       EntryPoints: 
+  #       - UserService/handlers/getOne.ts
 
-  DeleteUserFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref UserTable
-      CodeUri: packages/
-      Handler: delete.controller
-      Runtime: nodejs18.x
-      Architectures:
-        - x86_64
-      Events:
-        GetUserApi:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            RestApiId: !Ref RestApi
-            Path: /user/{id}
-            Method: delete
+  # GetUsersFunction:
+  #   Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  #   Properties:
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: !Ref UserTable
+  #     CodeUri: packages/
+  #     Handler: getAll.controller
+  #     Runtime: nodejs18.x
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       GetUserApi:
+  #         Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+  #         Properties:
+  #           RestApiId: !Ref RestApi
+  #           Path: /user
+  #           Method: get
 
     
-    Metadata: # Manage esbuild properties
-      BuildMethod: esbuild
-      BuildProperties:
-        Minify: false
-        Target: "es2020"
-        Sourcemap: true
-        EntryPoints: 
-        - UserService/handlers/delete.ts
+  #   Metadata: # Manage esbuild properties
+  #     BuildMethod: esbuild
+  #     BuildProperties:
+  #       Minify: false
+  #       Target: "es2020"
+  #       Sourcemap: true
+  #       EntryPoints: 
+  #       - UserService/handlers/getAll.ts
+
+  # DeleteUserFunction:
+  #   Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  #   Properties:
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: !Ref UserTable
+  #     CodeUri: packages/
+  #     Handler: delete.controller
+  #     Runtime: nodejs18.x
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       GetUserApi:
+  #         Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+  #         Properties:
+  #           RestApiId: !Ref RestApi
+  #           Path: /user/{id}
+  #           Method: delete
+
+    
+  #   Metadata: # Manage esbuild properties
+  #     BuildMethod: esbuild
+  #     BuildProperties:
+  #       Minify: false
+  #       Target: "es2020"
+  #       Sourcemap: true
+  #       EntryPoints: 
+  #       - UserService/handlers/delete.ts
 
   # HelloFunction:
   #   Type: AWS::Serverless::Function
