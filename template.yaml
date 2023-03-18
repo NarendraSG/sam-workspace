@@ -1,0 +1,227 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Application on AWS SAM, connecting to DynamoDB for Storing and Retrieving data.
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 60
+    MemorySize: 256
+
+    Environment:
+        Variables:
+          TABLE_USER: !Ref UserTableName
+          STAGE: !Ref Stage
+          ENVIRONMENT: !Ref AWS::Region
+
+Parameters:
+  Stage:
+    Type: String
+    Default: debug
+    Description: Developing while debugging on lambda function
+  UserTableName:
+    Type: String
+    Default: users
+    Description: User Table Name
+  
+
+Resources: 
+  # API Gateway created
+
+  RestApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Stage
+      Auth:
+        DefaultAuthorizer: Authorizer
+        Authorizers: 
+          Authorizer:
+            FunctionArn: !GetAtt MyAuthFunction.Arn
+            Identity:
+              ReauthorizeEvery: 0 # Should set this otherwise the APIs will get 403 
+
+
+  MyAuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: packages
+      Handler: index.controller
+      Runtime: nodejs18.x
+    
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints: 
+        - AuthService/index.ts
+
+# Lambda Functions here
+  CreateUserFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UserTable
+      CodeUri: packages/
+      Handler: create.controller
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Events:
+        CreateUserApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /user
+            Method: post
+
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "es2020"
+        Sourcemap: true
+        Bundle: false
+        EntryPoints: 
+        - UserService/handlers/create.ts 
+
+  GetUserFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UserTable
+      CodeUri: packages/
+      Handler: getOne.controller
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Events:
+        GetUserApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /user/{id}
+            Method: get
+
+    
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints: 
+        - UserService/handlers/getOne.ts
+
+  GetUsersFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UserTable
+      CodeUri: packages/
+      Handler: getAll.controller
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Events:
+        GetUserApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /user
+            Method: get
+
+    
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints: 
+        - UserService/handlers/getAll.ts
+
+  DeleteUserFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UserTable
+      CodeUri: packages/
+      Handler: delete.controller
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Events:
+        GetUserApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /user/{id}
+            Method: delete
+
+    
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints: 
+        - UserService/handlers/delete.ts
+
+  # HelloFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: .
+  #     Handler: hello.controller # FileName.FunctionName
+  #     Runtime: nodejs18.x
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       Api:
+  #         Type: Api
+  #         Properties:
+  #           RestApiId: !Ref RestApi
+  #           Path: /hello # API Path
+  #           Method: get  # HTTP Verb: get, put, post...
+ 
+    # Metadata: # Manage esbuild properties
+    #   BuildMethod: esbuild
+    #   BuildProperties:
+    #     Minify: true
+    #     Target: "es2020"
+    #     Sourcemap: true
+    #     EntryPoints: 
+    #     - src/handlers/hello.ts
+            
+
+# DynamoDB tables here
+  UserTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref UserTableName
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: N
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  Region:
+    Description: "Region"
+    Value: !Ref AWS::Region
+
+  BaseUrl:
+    Description: "Create user API"
+    Value: !Sub "https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/"
