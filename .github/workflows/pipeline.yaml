@@ -3,7 +3,7 @@ name: Pipeline
 on:
   push:
     branches:
-      - 'master'
+      - 'npm-workspace-implementation'
       - 'feature**'
   delete:
     branches:
