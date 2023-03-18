@@ -248,14 +248,14 @@ jobs:
             --role-arn ${STAGING_CLOUDFORMATION_EXECUTION_ROLE} \
             --parameter-overrides "Stage=Staging UserTableName=nv_stag_users"
 
-  integration-test:
-    if: github.ref == 'refs/heads/master'
-    needs: [deploy-testing]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: |
-          # trigger the integration tests here
+  # integration-test:
+  #   if: github.ref == 'refs/heads/master'
+  #   needs: [deploy-testing]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: |
+  #         # trigger the integration tests here
 
   deploy-prod:
     if: github.ref == 'refs/heads/master'
