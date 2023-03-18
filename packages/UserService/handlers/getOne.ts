@@ -24,7 +24,7 @@ export const controller = async (
 
 	let response: APIGatewayProxyResult;
 	try {
-		const user = await User.get({ id });
+		const user = await User.get({ id: parseInt(id) });
 		response = {
 			statusCode: 200,
 			body: JSON.stringify({
