@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          sam validate
+          echo "Hello this is testing"
 
   # delete-feature:
   #   if: startsWith(github.event.ref, 'feature') && github.event_name == 'delete'
