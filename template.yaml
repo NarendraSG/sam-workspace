@@ -48,14 +48,13 @@ Resources:
     Properties:
       CodeUri: packages/AuthService
       Handler: index.controller
-      Runtime: nodejs18.x
     
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
         Target: "es2020"
-        Sourcemap: true
+        Sourcemap: false
         EntryPoints: 
         - index.ts
 
@@ -82,7 +81,7 @@ Resources:
       BuildProperties:
         Minify: true
         Target: "es2020"
-        Sourcemap: true
+        Sourcemap: false
         Bundle: true
         EntryPoints: 
         - handlers/create.ts 
@@ -104,13 +103,12 @@ Resources:
             Path: /user/{id}
             Method: get
 
-    
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
         Target: "es2020"
-        Sourcemap: true
+        Sourcemap: false
         Bundle: true
         EntryPoints: 
         - handlers/getOne.ts
@@ -132,13 +130,12 @@ Resources:
             Path: /user
             Method: get
 
-    
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
         Target: "es2020"
-        Sourcemap: true
+        Sourcemap: false
         Bundle: true
         EntryPoints: 
         - handlers/getAll.ts
@@ -159,14 +156,13 @@ Resources:
             RestApiId: !Ref RestApi
             Path: /user/{id}
             Method: delete
-
-    
+  
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
         Target: "es2020"
-        Sourcemap: true
+        Sourcemap: false
         Bundle: true
         EntryPoints: 
         - handlers/delete.ts
@@ -192,7 +188,7 @@ Resources:
     #   BuildProperties:
     #     Minify: true
     #     Target: "es2020"
-    #     Sourcemap: true
+    #     Sourcemap: false
     #     EntryPoints: 
     #     - src/handlers/hello.ts
 
