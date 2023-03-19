@@ -1,41 +1,49 @@
-export const controller = async function (event: any) {
-  const token = event.authorizationToken.toLowerCase();
-  const methodArn = event.methodArn;
+export const controller = async (event: any) => {
+	const token = event.authorizationToken.toLowerCase();
+	const methodArn = event.methodArn;
 
-  let response;
-  switch (token) {
-    case "allow":
-      response = generateAuthResponse("user", "Allow", methodArn);
-      break;
-    default:
-      response = generateAuthResponse("user", "Deny", methodArn);
-  }
+	let response;
+	switch (token) {
+		case 'allow':
+			response = generateAuthResponse(
+				'user',
+				'Allow',
+				methodArn,
+			);
+			break;
+		default:
+			response = generateAuthResponse(
+				'user',
+				'Deny',
+				methodArn,
+			);
+	}
 
-  return response;
+	return response;
 };
 
 function generateAuthResponse(principalId: any, effect: any, methodArn: any) {
-  const policyDocument = generatePolicyDocument(effect, methodArn);
+	const policyDocument = generatePolicyDocument(effect, methodArn);
 
-  return {
-    principalId,
-    policyDocument,
-  };
+	return {
+		principalId,
+		policyDocument,
+	};
 }
 
 function generatePolicyDocument(effect: any, methodArn: any) {
-  if (!effect || !methodArn) return null;
+	if (!effect || !methodArn) return null;
 
-  const policyDocument = {
-    Version: "2012-10-17",
-    Statement: [
-      {
-        Action: "execute-api:Invoke",
-        Effect: effect,
-        Resource: methodArn,
-      },
-    ],
-  };
+	const policyDocument = {
+		Version: '2012-10-17',
+		Statement: [
+			{
+				Action: 'execute-api:Invoke',
+				Effect: effect,
+				Resource: methodArn,
+			},
+		],
+	};
 
-  return policyDocument;
+	return policyDocument;
 }

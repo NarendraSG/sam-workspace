@@ -4,7 +4,7 @@ import { User } from '../userModel';
 import { logInfo, logError } from '../loggers';
 import { createUserMiddleware, UserServiceSchema } from '../middlewares';
 
-if (process.env.STAGE != 'local') {
+if (process.env.STAGE !== 'local') {
 	const ddb = new dynamoose.aws.ddb.DynamoDB({
 		region: process.env.ENVIRONMENT,
 	});
@@ -20,11 +20,11 @@ export const controller = async (
 		pathParameters: { id },
 	} = event as any;
 
-	logInfo('getOne.invoked', { id: parseInt(id) });
+	logInfo('getOne.invoked', { id: parseInt(id, 10) });
 
 	let response: APIGatewayProxyResult;
 	try {
-		const user = await User.get({ id: parseInt(id) });
+		const user = await User.get({ id: parseInt(id, 10) });
 		response = {
 			statusCode: 200,
 			body: JSON.stringify({

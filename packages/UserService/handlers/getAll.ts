@@ -3,7 +3,7 @@ import * as dynamoose from 'dynamoose';
 import { User } from '../userModel';
 import { logInfo, logError } from '../loggers';
 import { createUserMiddleware, UserServiceSchema } from '../middlewares';
-if (process.env.STAGE != 'local') {
+if (process.env.STAGE !== 'local') {
 	const ddb = new dynamoose.aws.ddb.DynamoDB({
 		region: process.env.ENVIRONMENT,
 	});

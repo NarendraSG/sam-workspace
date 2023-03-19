@@ -16,6 +16,7 @@
 		"container:init": "docker compose up -d",
 		"container: down": "docker compose down",
 		"start:local": "sam local start-api --parameter-overrides Stage=local UserTableName=users",
-		"start:cloud": "sam sync --template-file template.yaml  --watch --parameter-overrides Stage=cloud-test UserTableName=stag-users --stack-name"
+		"start:cloud": "sam sync --template-file template.yaml  --watch --parameter-overrides Stage=cloud-test UserTableName=stag-users --stack-name",
+		"lint:check": "tslint -c tslint.json 'packages/**/*.ts'"
 	}
 }

@@ -4,7 +4,7 @@ import { User } from '../userModel';
 import { logInfo, logError } from '../loggers';
 import { createUserMiddleware, UserServiceSchema } from '../middlewares';
 
-if (process.env.STAGE != 'local') {
+if (process.env.STAGE !== 'local') {
 	const ddb = new dynamoose.aws.ddb.DynamoDB({
 		region: process.env.ENVIRONMENT,
 	});
@@ -27,7 +27,7 @@ export const controller = async (
 
 	let response: APIGatewayProxyResult;
 	try {
-		const user = new User(userData as Object);
+		const user = new User(userData as Record<string, any>);
 
 		await user.save();
 
