@@ -12,6 +12,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "node build.js",
-		"del": "rm -rf .aws-sam/ && rm -rf node_modules/ && rm -rf package-lock.json"
+		"del": "rm -rf .aws-sam/ && rm -rf node_modules/ && rm -rf package-lock.json",
+		"start:local": "sam local start-api --parameter-overrides \"Stage=local UserTableName=users \""
 	}
 }

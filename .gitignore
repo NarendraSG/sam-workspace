@@ -4,3 +4,4 @@ package-lock.json
 .aws-sam/
 .git
 .vscode
+dynamodb_vol

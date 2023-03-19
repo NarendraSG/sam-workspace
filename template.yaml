@@ -8,7 +8,9 @@ Globals:
   Function:
     Timeout: 60
     MemorySize: 256
-
+    Runtime: nodejs18.x
+    Architectures:
+      - x86_64
     Environment:
         Variables:
           TABLE_USER: !Ref UserTableName
@@ -41,7 +43,6 @@ Resources:
             Identity:
               ReauthorizeEvery: 0 # Should set this otherwise the APIs will get 403 
 
-
   MyAuthFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -67,9 +68,7 @@ Resources:
             TableName: !Ref UserTable
       CodeUri: packages/UserService
       Handler: create.controller
-      Runtime: nodejs18.x
-      Architectures:
-        - x86_64
+      
       Events:
         CreateUserApi:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -81,10 +80,10 @@ Resources:
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
-        Minify: false
+        Minify: true
         Target: "es2020"
         Sourcemap: true
-        Bundle: false
+        Bundle: true
         EntryPoints: 
         - handlers/create.ts 
 
@@ -96,9 +95,7 @@ Resources:
             TableName: !Ref UserTable
       CodeUri: packages/UserService
       Handler: getOne.controller
-      Runtime: nodejs18.x
-      Architectures:
-        - x86_64
+      
       Events:
         GetUserApi:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -111,9 +108,10 @@ Resources:
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
-        Minify: false
+        Minify: true
         Target: "es2020"
         Sourcemap: true
+        Bundle: true
         EntryPoints: 
         - handlers/getOne.ts
 
@@ -125,9 +123,7 @@ Resources:
             TableName: !Ref UserTable
       CodeUri: packages/UserService
       Handler: getAll.controller
-      Runtime: nodejs18.x
-      Architectures:
-        - x86_64
+      
       Events:
         GetUserApi:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -140,9 +136,10 @@ Resources:
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
-        Minify: false
+        Minify: true
         Target: "es2020"
         Sourcemap: true
+        Bundle: true
         EntryPoints: 
         - handlers/getAll.ts
 
@@ -154,9 +151,7 @@ Resources:
             TableName: !Ref UserTable
       CodeUri: packages/UserService
       Handler: delete.controller
-      Runtime: nodejs18.x
-      Architectures:
-        - x86_64
+      
       Events:
         GetUserApi:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -169,9 +164,10 @@ Resources:
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
-        Minify: false
+        Minify: true
         Target: "es2020"
         Sourcemap: true
+        Bundle: true
         EntryPoints: 
         - handlers/delete.ts
 
@@ -199,7 +195,6 @@ Resources:
     #     Sourcemap: true
     #     EntryPoints: 
     #     - src/handlers/hello.ts
-            
 
 # DynamoDB tables here
   UserTable:
