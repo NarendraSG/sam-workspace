@@ -24,7 +24,7 @@ export const controller = async (
 			statusCode: 200,
 			body: JSON.stringify({
 				message: 'List Users',
-				users: users,
+				users,
 			}),
 		};
 	} catch (error: unknown) {

@@ -11,8 +11,9 @@
 	},
 	"type": "module",
 	"scripts": {
-		"build": "node build.js",
-		"del": "rm -rf .aws-sam/ && rm -rf node_modules/ && rm -rf package-lock.json",
-		"start:local": "sam local start-api --parameter-overrides \"Stage=local UserTableName=users \""
+		"clear:all": "rm -rf .aws-sam/ node_modules/ package-lock.json",
+		"build": "sam build",
+		"start:local": "sam local start-api --parameter-overrides \"Stage=local UserTableName=users \"",
+		"start:cloud": "sam sync --template-file template.yaml  --watch --parameter-overrides Stage=cloud-test --stack-name"
 	}
 }
